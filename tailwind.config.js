@@ -3,8 +3,11 @@ export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        primary: '#e7b646'
+      },
       textColor: {
-        amber: '#e7b646',
+        primary: '#e7b646',
         black: 'rgb(50 50 50)'
       }
     }
