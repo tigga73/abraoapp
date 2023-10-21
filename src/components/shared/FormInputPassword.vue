@@ -1,25 +1,27 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-library.add(faEnvelope);
-
-type Icons = 'envelope' | 'user';
+library.add(faEye);
+library.add(faEyeSlash);
 
 defineProps<{
   name: string;
-  type: string;
   modelValue: string;
   placeholder: string;
-  icon: Icons;
 }>();
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void;
 }>();
 
-const iconsBase: { [key: string]: string } = {
-  envelope: 'envelope'
+const isText = ref<boolean>(false);
+const icon = ref<string>('eye-slash');
+
+const changeInputType = () => {
+  isText.value = !isText.value;
+  isText.value ? (icon.value = 'eye') : (icon.value = 'eye-slash');
 };
 
 const handleInput = (e: Event) => {
@@ -31,7 +33,7 @@ const handleInput = (e: Event) => {
 <template>
   <div class="h-10 rounded-md relative">
     <input
-      :type="type"
+      :type="isText ? 'text' : 'password'"
       :name="name"
       :value="modelValue"
       class="rounded-md w-full h-full border-2 focus:border-primary focus:outline-none pl-4 shadow-sm placeholder-slate-400"
@@ -39,11 +41,13 @@ const handleInput = (e: Event) => {
       @input="handleInput"
     />
 
-    <FontAwesomeIcon
-      :icon="['far', iconsBase[icon]]"
-      class="absolute right-4 top-1/2 transform -translate-y-1/2"
-      style="color: #e7b646"
-    />
+    <button type="button" @click="changeInputType">
+      <FontAwesomeIcon
+        :icon="['far', icon]"
+        class="absolute right-4 top-1/2 transform -translate-y-1/2"
+        style="color: #e7b646"
+      />
+    </button>
   </div>
 </template>
 
