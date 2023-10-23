@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 
 library.add(faEnvelope);
+library.add(faPenToSquare);
 
-type Icons = 'envelope' | 'user';
+type Icons = 'envelope' | 'pen';
 
 defineProps<{
   name: string;
@@ -19,7 +21,8 @@ const emit = defineEmits<{
 }>();
 
 const iconsBase: { [key: string]: string } = {
-  envelope: 'envelope'
+  envelope: 'envelope',
+  pen: 'pen-to-square'
 };
 
 const handleInput = (e: Event) => {
